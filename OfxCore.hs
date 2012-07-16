@@ -24,6 +24,8 @@ import Data.Typeable
 type HOfxHostPtr = Ptr (HOfxHost)
 {-# LINE 21 "OfxCore.chs" #-}
 
+type OfxStatus = CInt
+
 -- |
 data HOfxHost =
   HOfxHost
@@ -33,19 +35,19 @@ data HOfxHost =
 
 -- type OfxPlugin = {#type OfxPlugin #}
 type HOfxPluginPtr = Ptr (HOfxPlugin)
-{-# LINE 31 "OfxCore.chs" #-}
+{-# LINE 33 "OfxCore.chs" #-}
 
 instance Storable HOfxHost where
-  sizeOf _ = 16
-{-# LINE 34 "OfxCore.chs" #-}
+  sizeOf _ = 8
+{-# LINE 36 "OfxCore.chs" #-}
   alignment _ = 4
   peek p =
     HOfxHost
       <$> ((\ptr -> do {peekByteOff ptr 0 ::IO (Ptr ())}) p)
-      <*> ((\ptr -> do {peekByteOff ptr 8 ::IO (FunPtr ((Ptr ()) -> ((Ptr CChar) -> (CInt -> (IO (Ptr ()))))))})p)
+      <*> ((\ptr -> do {peekByteOff ptr 4 ::IO (FunPtr ((Ptr ()) -> ((Ptr CChar) -> (CInt -> (IO (Ptr ()))))))})p)
   poke p x = do
     (\ptr val -> do {pokeByteOff ptr 0 (val::(Ptr ()))}) p (host x)
-    (\ptr val -> do {pokeByteOff ptr 8 (val::(FunPtr ((Ptr ()) -> ((Ptr CChar) -> (CInt -> (IO (Ptr ())))))))}) p (fetchSuite x)
+    (\ptr val -> do {pokeByteOff ptr 4 (val::(FunPtr ((Ptr ()) -> ((Ptr CChar) -> (CInt -> (IO (Ptr ())))))))}) p (fetchSuite x)
 
 -- | Simplifying the types of args for the main entry functions
 type MainEntryArgs = CString -> Ptr () -> Ptr () -> Ptr ()
@@ -62,25 +64,25 @@ data HOfxPlugin =
     } deriving (Show, Typeable)
 
 instance Storable HOfxPlugin where
-    sizeOf _ = 48
-{-# LINE 59 "OfxCore.chs" #-}
+    sizeOf _ = 28
+{-# LINE 61 "OfxCore.chs" #-}
     alignment _ = 4
     peek p =
       HOfxPlugin
           <$> (\ptr -> do {peekByteOff ptr 0 ::IO (Ptr CChar)}) p
-          <*> liftM cIntConv ((\ptr -> do {peekByteOff ptr 8 ::IO CInt}) p)
-          <*> ((\ptr -> do {peekByteOff ptr 16 ::IO (Ptr CChar)}) p)
-          <*> liftM cIntConv ((\ptr -> do {peekByteOff ptr 24 ::IO CUInt}) p)
-          <*> liftM cIntConv ((\ptr -> do {peekByteOff ptr 28 ::IO CUInt}) p)
-          <*> (\ptr -> do {peekByteOff ptr 32 ::IO (FunPtr ((HOfxHostPtr) -> (IO ())))}) p
-          <*> (\ptr -> do {peekByteOff ptr 40 ::IO (FunPtr ((Ptr CChar) -> ((Ptr ()) -> ((Ptr ()) -> ((Ptr ()) -> (IO CInt))))))}) p
+          <*> liftM cIntConv ((\ptr -> do {peekByteOff ptr 4 ::IO CInt}) p)
+          <*> ((\ptr -> do {peekByteOff ptr 8 ::IO (Ptr CChar)}) p)
+          <*> liftM cIntConv ((\ptr -> do {peekByteOff ptr 12 ::IO CUInt}) p)
+          <*> liftM cIntConv ((\ptr -> do {peekByteOff ptr 16 ::IO CUInt}) p)
+          <*> (\ptr -> do {peekByteOff ptr 20 ::IO (FunPtr ((HOfxHostPtr) -> (IO ())))}) p
+          <*> (\ptr -> do {peekByteOff ptr 24 ::IO (FunPtr ((Ptr CChar) -> ((Ptr ()) -> ((Ptr ()) -> ((Ptr ()) -> (IO CInt))))))}) p
     poke p x = do
       (\ptr val -> do {pokeByteOff ptr 0 (val::(Ptr CChar))}) p (pluginApi x)
-      (\ptr val -> do {pokeByteOff ptr 8 (val::CInt)}) p (cIntConv $ apiVersion x)
-      (\ptr val -> do {pokeByteOff ptr 16 (val::(Ptr CChar))}) p (pluginIdentifier x)
-      (\ptr val -> do {pokeByteOff ptr 24 (val::CUInt)}) p (cIntConv $ pluginVersionMajor x)
-      (\ptr val -> do {pokeByteOff ptr 28 (val::CUInt)}) p (cIntConv $ pluginVersionMinor x)
-      (\ptr val -> do {pokeByteOff ptr 32 (val::(FunPtr ((HOfxHostPtr) -> (IO ()))))}) p (setHost x)
-      (\ptr val -> do {pokeByteOff ptr 40 (val::(FunPtr ((Ptr CChar) -> ((Ptr ()) -> ((Ptr ()) -> ((Ptr ()) -> (IO CInt)))))))}) p (mainEntry x)
+      (\ptr val -> do {pokeByteOff ptr 4 (val::CInt)}) p (cIntConv $ apiVersion x)
+      (\ptr val -> do {pokeByteOff ptr 8 (val::(Ptr CChar))}) p (pluginIdentifier x)
+      (\ptr val -> do {pokeByteOff ptr 12 (val::CUInt)}) p (cIntConv $ pluginVersionMajor x)
+      (\ptr val -> do {pokeByteOff ptr 16 (val::CUInt)}) p (cIntConv $ pluginVersionMinor x)
+      (\ptr val -> do {pokeByteOff ptr 20 (val::(FunPtr ((HOfxHostPtr) -> (IO ()))))}) p (setHost x)
+      (\ptr val -> do {pokeByteOff ptr 24 (val::(FunPtr ((Ptr CChar) -> ((Ptr ()) -> ((Ptr ()) -> ((Ptr ()) -> (IO CInt)))))))}) p (mainEntry x)
 
 

@@ -20,6 +20,8 @@ import Data.Typeable
 
 {#pointer *OfxHost as HOfxHostPtr -> HOfxHost #}
 
+type OfxStatus = CInt
+
 -- |
 data HOfxHost =
   HOfxHost
