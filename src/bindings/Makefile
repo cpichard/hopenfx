@@ -1,7 +1,7 @@
 
 .SUFFIXES= .chs .hs
 
-all: OfxCore.hs OfxProperty.hs
+all: OfxCore.hs OfxProperty.hs OfxParam.hs
 
 %.hs: %.chs
 	c2hs $<

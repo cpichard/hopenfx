@@ -1,10 +1,10 @@
 HOPENFX
 =========
 
-OpenFX bindings for haskell plus test plugin and host
+OpenFX bindings for haskell, test plugin and host
 
 Build
 =======
 
-cd src; make
+make
 
