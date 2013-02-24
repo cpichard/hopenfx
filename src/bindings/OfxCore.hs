@@ -19,10 +19,10 @@ import Data.Typeable
 
 
 
-{-# LINE 19 "OfxCore.chs" #-}
+{-# LINE 18 "OfxCore.chs" #-}
 
 type HOfxHostPtr = Ptr (HOfxHost)
-{-# LINE 21 "OfxCore.chs" #-}
+{-# LINE 20 "OfxCore.chs" #-}
 
 type OfxStatus = CInt
 
@@ -35,11 +35,11 @@ data HOfxHost =
 
 -- type OfxPlugin = {#type OfxPlugin #}
 type HOfxPluginPtr = Ptr (HOfxPlugin)
-{-# LINE 33 "OfxCore.chs" #-}
+{-# LINE 32 "OfxCore.chs" #-}
 
 instance Storable HOfxHost where
   sizeOf _ = 8
-{-# LINE 36 "OfxCore.chs" #-}
+{-# LINE 35 "OfxCore.chs" #-}
   alignment _ = 4
   peek p =
     HOfxHost
@@ -65,7 +65,7 @@ data HOfxPlugin =
 
 instance Storable HOfxPlugin where
     sizeOf _ = 28
-{-# LINE 61 "OfxCore.chs" #-}
+{-# LINE 60 "OfxCore.chs" #-}
     alignment _ = 4
     peek p =
       HOfxPlugin

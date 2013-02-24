@@ -2,7 +2,7 @@
 {-# LANGUAGE CPP #-}
 module OfxCore where
 
-#include "ofxCore.h"
+#include "../ofx/ofxCore.h"
 import C2HS
 import System.IO.Unsafe
 import Foreign
@@ -15,7 +15,6 @@ import Control.Applicative
 import Data.Typeable
 
 
-#include "ofxCore.h"
 {#context lib="openfx" #}
 
 {#pointer *OfxHost as HOfxHostPtr -> HOfxHost #}

@@ -6,8 +6,8 @@
 
 module OfxProperty where
 
---import C2HS
---import C2HS
+import C2HS
+import C2HS
 import System.IO.Unsafe
 import Foreign
 import Foreign.C

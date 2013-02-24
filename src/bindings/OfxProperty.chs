@@ -15,7 +15,7 @@ import Control.Applicative
 import Data.Typeable
 import OfxCore
 
-#include "ofxProperty.h"
+#include "../ofx/ofxProperty.h"
 
 -- | TODO : find a way to automagically pass all defines
 kOfxPropertySuite = "OfxPropertySuite"

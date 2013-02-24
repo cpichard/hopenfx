@@ -1,2 +1,1 @@
-#include "ofxCore.h"
-#include "ofxCore.h"
+#include "../ofx/ofxCore.h"

@@ -1,1 +1,1 @@
-#include "ofxProperty.h"
+#include "../ofx/ofxProperty.h"
