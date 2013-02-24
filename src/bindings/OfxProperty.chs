@@ -68,7 +68,7 @@ data HOfxPropertySuiteV1 =
     ,  propSetDoubleN :: FunPtr (OfxPropertySetHandle
                       -> CString
                       -> CInt
-                      -> Ptr ( CDouble)
+                      -> Ptr (CDouble)
                       -> IO OfxStatus)
 
     ,  propSetIntN    :: FunPtr (OfxPropertySetHandle
