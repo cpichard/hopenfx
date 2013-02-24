@@ -21,12 +21,12 @@ module HOpenFX where
 
 import Foreign
 import Foreign.ForeignPtr
-import OfxCore
 import Foreign.C.Types
 import Foreign.C.String
 import Control.Applicative
 import Data.IORef
 import OfxProperty
+import OfxCore
 
 -- |Global state variable to store the pointer to the host given by the
 -- host itself
