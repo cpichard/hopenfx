@@ -6,13 +6,15 @@
 /** Test plugin exports without nuke
  */
 
-
 void test_hopenfx(void) {
 
     void *dl = dlopen("./HOpenFX.ofx.bundle/Contents/Linux-x86-64/HOpenFX.ofx", RTLD_LAZY);
     if(dl) {
         printf("\ntest:Library loaded\n");
+    } else {
+        printf("test:Unable to load library\n");
     }
+
 
 
     int (*numberOfPlugin)() = (int(*)(int)) dlsym(dl, "OfxGetNumberOfPlugins");
@@ -27,12 +29,12 @@ void test_hopenfx(void) {
         printf("test:getPlugin function found\n");
         OfxPlugin *plug = getPlugin(0);
         printf("test:getPlugin called\n");
-        printf("test:plug at adress:%d\n", plug);
+        printf("test:plug at adress:%p\n", plug);
         printf("test:calling set host\n");
         plug->setHost(NULL);
         printf("test:set host called\n");
         printf("test:calling main entry\n");
-        const int k = plug->mainEntry( "OfxTest", NULL, NULL, NULL);  
+        const int k = plug->mainEntry( "OfxTest", NULL, NULL, NULL);
         printf("test:main entry called and returned %d\n", k);
     }
 

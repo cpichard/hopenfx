@@ -1,12 +1,10 @@
-
-
-all: subdirs
-
 SUBDIRS = src
 
-.PHONY: subdirs $(SUBDIRS)
+all clean: subdirs
 
 subdirs: $(SUBDIRS)
 
 $(SUBDIRS):
-	$(MAKE) -C $@
+	$(MAKE) -C $@ $(MAKECMDGOALS)
+
+.PHONY: subdirs $(SUBDIRS)

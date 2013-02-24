@@ -8,3 +8,7 @@ GHCLIB=/usr/local/lib/ghc-7.4.1/
 
 all:
 	ghc -O2 -no-hs-main -shared -dynamic -fPIC -optc '-DMODULE=HOpenFX' -i../bindings/ -L$(GHCLIB)/base-4.5.0.0/ -optc '-L$(GHCLIB)/base-4.5.0.0/' -lHSrts-ghc7.4.1 -o  HOpenFX.ofx.bundle/Contents/Linux-x86-64/HOpenFX.ofx library_init.c HOpenFX.hs
+
+
+clean:
+	rm *.o
