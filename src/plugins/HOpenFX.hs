@@ -6,6 +6,7 @@
 -- docs from :
 -- http://weblog.haskell.cz/pivnik/building-a-shared-library-in-haskell/
 --
+-- http://openfx.sourceforge.net/Documentation/1.3/index.html
 -- These two functions have to be implemented to initiate the communication
 -- with the host :
 --    int OfxGetNumberOfPlugins(void)
@@ -34,8 +35,12 @@ gHost :: IORef HOfxHostPtr
 gHost = unsafePerformIO (newIORef nullPtr)
 {-# NOINLINE gHost #-}
 
--- |Functions called by the host via mainEntryFunc
--- pluginFunctions = [("kActionLoadPlugin", loadPlugin)]
+
+loadPlugin :: Ptr () -> Ptr () -> Ptr () -> IO CInt
+loadPlugin _ _ _= return kOfxStatOK
+
+unloadPlugin :: Ptr () -> Ptr() -> Ptr() -> IO CInt
+unloadPlugin _ _ _= return kOfxStatOK
 
 -- |Hack to statically define a FunPtr to a haskell function
 foreign export ccall "setOfxHost" setOfxHost :: HOfxHostPtr -> IO ()
@@ -43,7 +48,7 @@ foreign import ccall "&setOfxHost" setOfxHostPtr :: FunPtr (HOfxHostPtr -> IO ()
 setOfxHost :: HOfxHostPtr -> IO ()
 setOfxHost h = do
     print h
-    putStrLn "haskell:setOfxHost passed"
+    putStrLn "haskell:setOfxHost"
     writeIORef gHost h
     putStrLn "haskell:host stored in IORef"
     return ()
@@ -52,16 +57,27 @@ setOfxHost h = do
 --  Defines the main entry function the host use to run the plugin
 foreign export ccall "mainEntryFunc" mainEntryFunc :: (CString -> Ptr () -> Ptr () -> Ptr () -> IO CInt)
 foreign import ccall "&mainEntryFunc" mainEntryFuncPtr :: FunPtr (CString -> Ptr () -> Ptr () -> Ptr () -> IO CInt)
-mainEntryFunc :: CString -> Ptr () -> Ptr () -> Ptr () -> IO CInt
-mainEntryFunc a _ _ _   = do
+mainEntryFunc :: CString -- Action
+              -> Ptr ()  -- Handle
+              -> Ptr ()  -- InArgs
+              -> Ptr ()  -- OutArgs
+              -> IO CInt -- Return kOfxStatXXX
+mainEntryFunc act han ina out = do
     putStrLn "haskell:mainEntryFunc called"
-    action <- peekCString a
+    action <- peekCString act
     print action
-    -- TODO : return kOfxStatOk
-    -- find a way to pass all the define constants
-    host <- readIORef gHost
-    print host
-    return 0
+    --host <- readIORef gHost
+    --print host
+
+    -- Dispatch functions given the action
+    case lookup action functions of
+      Just func  -> func han ina out
+      Nothing -> do putStrLn $ "haskell:No function found for action " ++ show action
+                    return kOfxStatFailed
+    where functions
+            = [ (kOfxActionLoad, loadPlugin)
+              , (kOfxActionUnload, unloadPlugin)
+              ]
 
 -- |Creates the default plugin informations that will be passed
 --  to the host when it will load the plugin
@@ -83,7 +99,7 @@ newPlugin =
 foreign export ccall "OfxGetNumberOfPlugins" ofxGetNumberOfPlugins :: IO CInt
 ofxGetNumberOfPlugins :: IO CInt
 ofxGetNumberOfPlugins = do
-    putStrLn "ofxGetNumber of plugins called"
+    putStrLn "haskell:ofxGetNumber of plugins called"
     return 1
 
 
@@ -91,10 +107,10 @@ ofxGetNumberOfPlugins = do
 foreign export ccall "OfxGetPlugin" ofxGetPlugin  :: CInt -> IO (Ptr HOfxPlugin)
 ofxGetPlugin :: CInt -> IO (Ptr HOfxPlugin)
 ofxGetPlugin i = do
-  putStrLn "ofxGetPlugin called "
-  print i
+  putStrLn "haskell:ofxGetPlugin called "
+  --print i
   myPlug <- newPlugin
-  print myPlug
+  --print myPlug
   new myPlug
 
 

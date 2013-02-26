@@ -1,5 +1,10 @@
 {-# LANGUAGE ForeignFunctionInterface, DeriveDataTypeable, TypeSynonymInstances  #-}
 {-# LANGUAGE CPP #-}
+
+{-
+    Bindings for OfxCore
+    TODO : some structure are not bound, like OfxRect
+-}
 module OfxCore where
 
 #include "../ofx/ofxCore.h"
@@ -78,3 +83,54 @@ instance Storable HOfxPlugin where
       {#set OfxPlugin.mainEntry#} p (mainEntry x)
 
 
+kOfxActionLoad = "OfxActionLoad"
+kOfxActionDescribe = "OfxActionDescribe"
+kOfxActionUnload = "OfxActionUnload"
+kOfxActionPurgeCaches                 = "OfxActionPurgeCaches"
+kOfxActionSyncPrivateData                 = "OfxActionSyncPrivateData"
+kOfxActionCreateInstance        = "OfxActionCreateInstance"
+kOfxActionDestroyInstance       = "OfxActionDestroyInstance"
+kOfxActionInstanceChanged = "OfxActionInstanceChanged"
+kOfxActionBeginInstanceChanged = "OfxActionBeginInstanceChanged"
+kOfxActionEndInstanceChanged = "OfxActionEndInstanceChanged"
+kOfxActionBeginInstanceEdit = "OfxActionBeginInstanceEdit"
+kOfxActionEndInstanceEdit = "OfxActionEndInstanceEdit"
+kOfxPropAPIVersion = "OfxPropAPIVersion"
+kOfxPropTime = "OfxPropTime"
+kOfxPropIsInteractive = "OfxPropIsInteractive"
+kOfxPluginPropFilePath = "OfxPluginPropFilePath"
+kOfxPropInstanceData = "OfxPropInstanceData"
+kOfxPropType = "OfxPropType"
+kOfxPropName = "OfxPropName"
+kOfxPropVersion = "OfxPropVersion"
+kOfxPropVersionLabel = "OfxPropVersionLabel"
+kOfxPropPluginDescription = "OfxPropPluginDescription"
+kOfxPropLabel = "OfxPropLabel"
+kOfxPropIcon = "OfxPropIcon"
+kOfxPropShortLabel = "OfxPropShortLabel"
+kOfxPropLongLabel = "OfxPropLongLabel"
+kOfxPropChangeReason = "OfxPropChangeReason"
+kOfxPropEffectInstance = "OfxPropEffectInstance"
+kOfxPropHostOSHandle = "OfxPropHostOSHandle"
+kOfxChangeUserEdited = "OfxChangeUserEdited"
+kOfxChangePluginEdited = "OfxChangePluginEdited"
+kOfxChangeTime = "OfxChangeTime"
+
+
+
+
+kOfxStatOK 0 :: CInt
+kOfxStatFailed  = 1 :: CInt
+kOfxStatErrFatal = 2 :: CInt
+kOfxStatErrUnknown = 3 :: CInt
+kOfxStatErrMissingHostFeature =  4 :: CInt
+kOfxStatErrUnsupported =  5 :: CInt
+kOfxStatErrExists  =  6 :: CInt
+kOfxStatErrFormat =  7 :: CInt
+kOfxStatErrMemory  =  8 :: CInt
+kOfxStatErrBadHandle =  9 :: CInt
+kOfxStatErrBadIndex = 10 :: CInt
+kOfxStatErrValue =  11 :: CInt
+kOfxStatReplyYes =  12 :: CInt
+kOfxStatReplyNo =  13 :: CInt
+kOfxStatReplyDefault =  14 :: CInt
