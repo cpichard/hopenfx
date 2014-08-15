@@ -1,5 +1,5 @@
---  C->Haskell Compiler: Marshalling library
 --
+--  C->Haskell Compiler: Marshalling library
 --  Copyright (c) [1999...2005] Manuel M T Chakravarty
 --
 --  Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@
 --  with the C->HS-specific higher-level marshalling routines.
 --
 
-module C2HS (
+module C2HS {-# DEPRECATED "The C2HS module should no longer be used." #-} (
 
   -- * Re-export the language-independent component of the FFI 
   module Foreign,
@@ -224,7 +224,7 @@ cFromBool  = fromBool
 
 -- |Obtain Haskell 'Bool' from C value.
 --
-cToBool :: (Eq a, Num a) => a -> Bool
+cToBool :: Num a => a -> Bool
 cToBool  = toBool
 
 -- |Convert a C enumeration to Haskell.

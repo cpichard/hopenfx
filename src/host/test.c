@@ -15,8 +15,6 @@ void test_hopenfx(void) {
         printf("test:Unable to load library\n");
     }
 
-
-
     int (*numberOfPlugin)() = (int(*)(int)) dlsym(dl, "OfxGetNumberOfPlugins");
     if(numberOfPlugin) {
         printf("test:number of plugin found\n");

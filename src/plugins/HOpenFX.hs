@@ -1,5 +1,5 @@
-{-# LANGUAGE ForeignFunctionInterface, DeriveDataTypeable  #-}
 -- OpenFX API Hacking in haskell
+{-# LANGUAGE ForeignFunctionInterface, DeriveDataTypeable  #-}
 --
 -- Main interest is testing the C foreign function interface in haskell
 --
@@ -28,6 +28,7 @@ import Control.Applicative
 import Data.IORef
 import OfxProperty
 import OfxCore
+import System.IO.Unsafe
 
 -- |Global state variable to store the pointer to the host given by the
 -- host itself
@@ -102,9 +103,8 @@ ofxGetNumberOfPlugins = do
     putStrLn "haskell:ofxGetNumber of plugins called"
     return 1
 
-
 -- |Returns the plugin structure
-foreign export ccall "OfxGetPlugin" ofxGetPlugin  :: CInt -> IO (Ptr HOfxPlugin)
+foreign export ccall "OfxGetPlugin" ofxGetPlugin :: CInt -> IO (Ptr HOfxPlugin)
 ofxGetPlugin :: CInt -> IO (Ptr HOfxPlugin)
 ofxGetPlugin i = do
   putStrLn "haskell:ofxGetPlugin called "

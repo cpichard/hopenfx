@@ -2,7 +2,6 @@
 
 module OfxParam where
 
-import C2HS
 import OfxProperty
 
 #include "../ofx/ofxParam.h"

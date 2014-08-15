@@ -8,7 +8,6 @@
 module OfxCore where
 
 #include "../ofx/ofxCore.h"
-import C2HS
 import System.IO.Unsafe
 import Foreign
 import Foreign.C
@@ -19,6 +18,8 @@ import Control.Monad
 import Control.Applicative
 import Data.Typeable
 
+cIntConv :: (Integral a, Num b) => a -> b
+cIntConv = fromIntegral
 
 {#context lib="openfx" #}
 
@@ -119,7 +120,7 @@ kOfxChangeTime = "OfxChangeTime"
 
 
 
-kOfxStatOK 0 :: CInt
+kOfxStatOK = 0 :: CInt
 kOfxStatFailed  = 1 :: CInt
 kOfxStatErrFatal = 2 :: CInt
 kOfxStatErrUnknown = 3 :: CInt
