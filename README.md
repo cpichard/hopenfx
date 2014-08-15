@@ -1,10 +1,12 @@
 HOPENFX
 =======
 
-OpenFX bindings for haskell, test plugin and host
+Incomplete OpenFX bindings for haskell with test plugin and mini host. This project is just a sandbox to test the foreign function interface in haskell.
 
 Build
 =======
+
+change the src/plugins/Makefile to point to the correct libHSrts.
 
 make
 
