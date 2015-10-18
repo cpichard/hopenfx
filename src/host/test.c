@@ -8,11 +8,12 @@
 
 void test_hopenfx(void) {
 
-    void *dl = dlopen("./HOpenFX.ofx.bundle/Contents/Linux-x86-64/HOpenFX.ofx", RTLD_LAZY);
+    void *dl = dlopen("../plugins/HOpenFX.ofx.bundle/Contents/Linux-x86-64/HOpenFX.ofx", RTLD_LAZY);
     if(dl) {
         printf("\ntest:Library loaded\n");
     } else {
         printf("test:Unable to load library\n");
+        return;
     }
 
     int (*numberOfPlugin)() = (int(*)(int)) dlsym(dl, "OfxGetNumberOfPlugins");

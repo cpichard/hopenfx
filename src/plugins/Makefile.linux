@@ -1,0 +1,16 @@
+PLUGINDIR=HOpenFX.ofx.bundle/Contents/Linux-x86-64/
+
+all: $(PLUGINDIR)
+	ghc -O2 -no-hs-main -fPIC -dynamic -shared \
+	-optl -v \
+	-optl/usr/local/haskell/ghc-7.10.2-x86_64/lib/ghc-7.10.2/rts/libCffi.a \
+	-optl-L/usr/local/haskell/ghc-7.10.2-x86_64/lib/ghc-7.10.2/rts/ -lHSrts_thr-ghc7.10.2\
+    	-optc '-DMODULE=HOpenFX' \
+	-i../bindings/ \
+	-o $(PLUGINDIR)/HOpenFX.ofx library_init.c HOpenFX.hs
+
+$(PLUGINDIR):
+	mkdir -p $(PLUGINDIR);
+
+clean:
+	rm *.o *.hi
